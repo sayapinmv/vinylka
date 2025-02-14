@@ -32,6 +32,7 @@ public class VinylDAO {
     public void saveVinyl(Vinyl vinyl) {
         int newId = this.vinyl.size();
         vinyl.setId(++newId);
+        this.vinyl.add(vinyl);
     }
 
 }

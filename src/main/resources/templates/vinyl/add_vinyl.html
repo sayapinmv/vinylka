@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/vinyl}" th :object="${vinyl}">
+<form th:method="POST" th:action="@{/cart/}" th :object="${vinyl}">
     <label for="album">Enter Album</label>
     <input type="text" th:field="*{album}" id="album"/>
     <br>
