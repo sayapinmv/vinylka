@@ -16,7 +16,7 @@ public class VinylDAO {
         vinyl = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-                vinyl.add(new Vinyl(i+1, "The Beatles "+i+" album", 1000*i));
+                vinyl.add(new Vinyl(i, "The Beatles "+i+" album", 1000*i));
         }
 
     }
@@ -30,9 +30,13 @@ public class VinylDAO {
     }
 
     public void saveVinyl(Vinyl vinyl) {
-        int newId = this.vinyl.size();
-        vinyl.setId(++newId);
+        vinyl.setId(this.vinyl.size());
         this.vinyl.add(vinyl);
+    }
+
+    public void update(int id, Vinyl vinyl) {
+       Vinyl vinylForUpdate = getVinylById(id);
+       vinylForUpdate.setAlbum(vinyl.getAlbum());
     }
 
 }
