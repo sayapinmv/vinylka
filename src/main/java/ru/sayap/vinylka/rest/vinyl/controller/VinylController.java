@@ -49,4 +49,16 @@ public class VinylController {
         return "redirect:/vinyl";
     }
 
+    @GetMapping("/{id}/edit")
+    public String editVinyl(@PathVariable("id") int id, Model model) {
+        model.addAttribute("vinyl", vinylDAO.getVinylById(id));
+        return "vinyl/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String updateVinyl(@PathVariable("id") int id, @ModelAttribute("vinyl") Vinyl vinyl) {
+        vinylDAO.update(id, vinyl);
+        return "redirect:/vinyl";
+    }
+
 }
