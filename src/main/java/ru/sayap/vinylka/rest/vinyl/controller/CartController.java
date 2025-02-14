@@ -20,13 +20,13 @@ public class CartController {
     public String newVinyl(Model model) {
         model.addAttribute("vinyl", new Vinyl());
 
-        return "cart/add_vinyl";
+        return "vinyl/add_vinyl";
     }
 
     @PostMapping()
     public String addNewToCart(@ModelAttribute("vinyl") Vinyl vinyl) {
         vinylDAO.saveVinyl(vinyl);
-        return "redirect:/add_vinyl";
+        return "redirect:/vinyl";
     }
 
 
