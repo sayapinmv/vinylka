@@ -4,10 +4,9 @@ package ru.sayap.vinylka.rest.vinyl.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.sayap.vinylka.rest.vinyl.dao.VinylDAO;
+import ru.sayap.vinylka.rest.vinyl.model.Vinyl;
 
 @Controller
 @RequestMapping("/vinyl")
@@ -20,29 +19,29 @@ public class VinylController {
         this.vinylDAO = vinylDAO;
     }
 
-    // will get all stock of lp's and then post on client view
     @GetMapping()
     public String vinyl(Model model) {
-
         model.addAttribute("vinyl", vinylDAO.getVinyl());
-
-        return "vinyl/stock";
+        return "vinyl/index";
     }
 
-    // will get singl lp by id and then  post on client view
     @GetMapping("/{id}")
     public String singleVinyl(@PathVariable("id") int id, Model model) {
-
         model.addAttribute("album", vinylDAO.getVinylById(id));
-
-        return "vinyl/lp";
+        return "vinyl/item";
     }
 
+    @GetMapping("/add")
+    public String newVinyl(Model model) {
+        model.addAttribute("vinyl", new Vinyl());
+        return "vinyl/add";
+    }
 
-//    @GetMapping("/")
-//    public String newVinyl() {
-//
-//    }
+    @PostMapping()
+    public String add(@ModelAttribute("vinyl") Vinyl vinyl) {
+        vinylDAO.saveVinyl(vinyl);
+        return "redirect:/vinyl";
+    }
 
     @GetMapping("/{id}/edit")
     public String editVinyl(@PathVariable("id") int id, Model model) {
@@ -51,8 +50,14 @@ public class VinylController {
     }
 
     @PatchMapping("/{id}")
-    public String updateVinyl(@PathVariable("id") int id, @ModelAttribute("vinyl") Vinyl vinyl) {
+    public String updateVinyl(@ModelAttribute("vinyl") Vinyl vinyl, @PathVariable("id") int id) {
         vinylDAO.update(id, vinyl);
+        return "redirect:/vinyl";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteVinyl(@PathVariable("id") int id) {
+        vinylDAO.delete(id);
         return "redirect:/vinyl";
     }
 

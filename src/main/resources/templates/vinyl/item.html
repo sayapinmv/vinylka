@@ -10,5 +10,15 @@
 <body>
 <p th:text="${album.getAlbum()}">VALUE</p>
 <p th:text="${album.getId()}">VALUE</p>
+
+<a th:href="@{/vinyl/{id}/edit(id=${album.getId()})}">Edit</a>
+
+<br/>
+
+<a th:href="@{/cart/add}">Add To Cart</a>
+
+<form th:method="DELETE" th:action="@{/vinyl/{id}(id=${album.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
 </body>
 </html>

@@ -39,4 +39,8 @@ public class VinylDAO {
        vinylForUpdate.setAlbum(vinyl.getAlbum());
     }
 
+    public void delete(int id) {
+        this.vinyl.removeIf(vinyl -> vinyl.getId() == id);
+    }
+
 }
