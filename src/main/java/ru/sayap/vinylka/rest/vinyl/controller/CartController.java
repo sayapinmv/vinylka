@@ -5,47 +5,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.sayap.vinylka.rest.vinyl.dao.CartDAO;
-import ru.sayap.vinylka.rest.vinyl.dao.VinylDAO;
-import ru.sayap.vinylka.rest.vinyl.model.Vinyl;
+import ru.sayap.vinylka.persistence.model.CartEntity;
+import ru.sayap.vinylka.persistence.model.CartItemsEntity;
+import ru.sayap.vinylka.persistence.model.UserEntity;
+import ru.sayap.vinylka.persistence.service.CartService;
+import ru.sayap.vinylka.persistence.service.UserService;
 
-@Controller
+
+import java.util.Set;
+import java.util.UUID;
+//import ru.sayap.vinylka.rest.vinyl.model.Vinyl;
+
+@RestController
 @RequestMapping("/cart")
 public class CartController {
-    private final CartDAO cartDAO;
-    private final VinylDAO vinylDAO;
+
+    CartService cartService;
+    UserService userService;
 
     @Autowired
-    public CartController(CartDAO cartDAO, VinylDAO vinylDAO) {
-        this.cartDAO = cartDAO;
-        this.vinylDAO = vinylDAO;
+    public CartController(CartService cartService, UserService userService) {
+        this.cartService = cartService;
+        this.userService = userService;
     }
 
     @GetMapping
-    public String cartList(Model model) {
-        model.addAttribute("cart", cartDAO.getCart());
-        return "cart/index";
+    public Set<CartItemsEntity> getCart(@RequestParam UUID userId) {
+
+        UserEntity userEntity = userService.findById(userId);
+
+        return cartService.viewCartItems(userEntity);
     }
 
-    @PostMapping("/add/{id}")
-    public String add(@PathVariable("id") int id) {
-        Vinyl vinyl = vinylDAO.getVinylById(id);
-        if (vinyl != null) {
-            cartDAO.add(vinyl);
-        }
-        return "redirect:/vinyl";
-    }
-
-    @DeleteMapping("/cart/{id}")
-    public String deleteItem(@PathVariable("id") int id) {
-        cartDAO.delete(id);
-        return "redirect:/cart";
-    }
-
-    @DeleteMapping("/clear")
-    public String clearCart() {
-        cartDAO.clear();
-        return "redirect:/cart";
-    }
 }
 
