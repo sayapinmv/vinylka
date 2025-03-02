@@ -9,6 +9,6 @@ import ru.sayap.vinylka.persistence.model.VinylEntity;
 import java.util.UUID;
 
 public interface CartItemsRepository extends JpaRepository<CartItemsEntity, UUID> {
-    CartItemsEntity deleteByCartIdAndVinylId(CartEntity cartEntity, VinylEntity vinylId);
-    CartItemsEntity findByCartAndVinyl(CartEntity cartEntity, VinylEntity vinylEntity);
+      CartItemsEntity deleteByCartIdAndVinylId(CartEntity cartEntity, VinylEntity vinylId);
+//    CartItemsEntity findByCartAndVinyl(UUID cartId, VinylEntity vinylEntity);
 }

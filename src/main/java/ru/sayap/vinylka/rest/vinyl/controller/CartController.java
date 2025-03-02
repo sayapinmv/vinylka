@@ -29,8 +29,8 @@ public class CartController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public Set<CartItemsEntity> getCart(@RequestParam UUID userId) {
+    @GetMapping("/{user_id}")
+    public Set<CartItemsEntity> getCart(@PathVariable(name = "user_id") UUID userId) {
 
         UserEntity userEntity = userService.findById(userId);
 

@@ -5,19 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.sayap.vinylka.persistence.model.OrderEntity;
-import ru.sayap.vinylka.persistence.model.OrderedVinylEntity;
-import ru.sayap.vinylka.persistence.model.UserEntity;
-import ru.sayap.vinylka.persistence.model.VinylEntity;
-import ru.sayap.vinylka.persistence.repository.OrderRepository;
-import ru.sayap.vinylka.persistence.repository.OrderedVinylRepository;
-import ru.sayap.vinylka.persistence.repository.UserRepository;
-import ru.sayap.vinylka.persistence.repository.VinylRepository;
+import ru.sayap.vinylka.persistence.model.*;
+import ru.sayap.vinylka.persistence.repository.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class VinylConfig {
@@ -30,6 +25,12 @@ public class VinylConfig {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    CartItemsRepository cartItemsRepository;
+
+    @Autowired
+    CartRepository cartRepository;
 
     @Bean
     CommandLineRunner commandLineRunner() {
@@ -44,9 +45,9 @@ public class VinylConfig {
                             "aaaaa",
                             null,//Sex.MAN,  // userSex - add appropriate Sex enum value
                             null,//UserStatus.ONLINE,  // status - set a default status
-                            new ArrayList<>(),  // Initialize orderEntities
-                            new ArrayList<>(),  // Initialize cartEntities
-                            new ArrayList<>()
+                            null,
+                            null,
+                            null
                     )
             );
 
@@ -63,24 +64,45 @@ public class VinylConfig {
                             "MaTBoT",
                             "RU",
                             "First Beatles Album",
-                            new ArrayList<>(),
-                            new ArrayList<>()
+                            null,
+                            null
                     )
             );
 
             var orderList = List.of(
-                    new OrderEntity(
-                            null,
-                            userList.get(0),
-                            null,
-                            null,
-                            LocalDate.of(1963, 12, 30),
-                            new ArrayList<>()
+                new OrderEntity(
+                    null,
+                    userList.get(0),
+                    null,
+                    null,
+                    LocalDate.of(1963, 12, 30),
+                    new ArrayList<>()
+                )
+            );
+
+            var cartList = List.of(
+                new CartEntity(
+                        null,
+                        userList.get(0),
+                        null
+                )
+            );
+
+            var cartItemsList = List.of(
+                    new CartItemsEntity(
+                        null,
+                        cartList.get(0),
+                        vinylList.get(0),
+                        12
                     )
             );
 
             vinylRepository.saveAll(vinylList);
             orderRepository.saveAll(orderList);
+            cartRepository.saveAll(cartList);
+            cartItemsRepository.saveAll(cartItemsList);
+
+
 
 //            var orderedVinylList = List.of(
 //                    new OrderedVinylEntity() {

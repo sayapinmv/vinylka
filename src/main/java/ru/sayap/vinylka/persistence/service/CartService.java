@@ -30,30 +30,30 @@ public class CartService {
          return cartRepository.getByUserId(userEntity);
     }
 
-    public void addItemToCart(UserEntity user, VinylEntity vinylEntity, int quantity) {
-
-        CartEntity cartEntity = getCart(user);
-
-        if (cartEntity == null) {
-            cartEntity = new CartEntity();
-            cartEntity.setUserId(user);
-            cartEntity = cartRepository.save(cartEntity);
-        }
-
-        CartItemsEntity cartItemsEntity = cartItemsRepository.findByCartAndVinyl(cartEntity, vinylEntity);
-
-        if (cartItemsEntity != null) {
-            cartItemsEntity.setQnty(cartItemsEntity.getQnty() + quantity);
-        } else {
-            cartItemsEntity = new CartItemsEntity();
-            cartItemsEntity.setVinylId(vinylEntity);
-            cartItemsEntity.setCartId(cartEntity);
-            cartItemsEntity.setQnty(quantity);
-        }
-
-
-        cartItemsRepository.save(cartItemsEntity);
-    }
+//    public void addItemToCart(UserEntity user, VinylEntity vinylEntity, int quantity) {
+//
+//        CartEntity cartEntity = getCart(user);
+//
+//        if (cartEntity == null) {
+//            cartEntity = new CartEntity();
+//            cartEntity.setUserId(user);
+//            cartEntity = cartRepository.save(cartEntity);
+//        }
+//
+//        CartItemsEntity cartItemsEntity = cartItemsRepository.findByCartAndVinyl(cartEntity.getId(), vinylEntity);
+//
+//        if (cartItemsEntity != null) {
+//            cartItemsEntity.setQnty(cartItemsEntity.getQnty() + quantity);
+//        } else {
+//            cartItemsEntity = new CartItemsEntity();
+//            cartItemsEntity.setVinylId(vinylEntity);
+//            cartItemsEntity.setCartId(cartEntity);
+//            cartItemsEntity.setQnty(quantity);
+//        }
+//
+//
+//        cartItemsRepository.save(cartItemsEntity);
+//    }
 
     public void removeItemFromCart(UserEntity user, VinylEntity vinyl) {
         CartEntity cart = getCart(user);
