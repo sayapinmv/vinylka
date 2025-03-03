@@ -1,15 +1,13 @@
-package ru.sayap.vinylka.rest.vinyl.controller;
+package ru.sayap.vinylka.rest.cart;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.sayap.vinylka.persistence.model.CartEntity;
 import ru.sayap.vinylka.persistence.model.CartItemsEntity;
 import ru.sayap.vinylka.persistence.model.UserEntity;
-import ru.sayap.vinylka.persistence.service.CartService;
-import ru.sayap.vinylka.persistence.service.UserService;
+import ru.sayap.vinylka.rest.cart.dto.GetCartResponse;
+import ru.sayap.vinylka.service.cart.CartService;
+import ru.sayap.vinylka.service.UserService;
 
 
 import java.util.Set;
@@ -30,7 +28,7 @@ public class CartController {
     }
 
     @GetMapping("/{user_id}")
-    public Set<CartItemsEntity> getCart(@PathVariable(name = "user_id") UUID userId) {
+    public GetCartResponse getCart(@PathVariable(name = "user_id") UUID userId) {
 
         UserEntity userEntity = userService.findById(userId);
 

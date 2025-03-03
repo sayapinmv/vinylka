@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.sayap.vinylka.persistence.cart.CartEntity;
+import ru.sayap.vinylka.persistence.cart.CartRepository;
 import ru.sayap.vinylka.persistence.model.*;
 import ru.sayap.vinylka.persistence.repository.*;
 
@@ -12,7 +14,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Configuration
 public class VinylConfig {

@@ -1,4 +1,4 @@
-package ru.sayap.vinylka.rest.vinyl.controller;
+package ru.sayap.vinylka.rest.order;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sayap.vinylka.persistence.model.OrderEntity;
 import ru.sayap.vinylka.persistence.model.UserEntity;
-import ru.sayap.vinylka.persistence.service.OrderService;
-import ru.sayap.vinylka.persistence.service.UserService;
-import ru.sayap.vinylka.persistence.service.VinylService;
+import ru.sayap.vinylka.service.OrderService;
+import ru.sayap.vinylka.service.UserService;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,8 +1,6 @@
-package ru.sayap.vinylka.persistence.repository;
+package ru.sayap.vinylka.persistence.cart;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.sayap.vinylka.persistence.model.CartEntity;
-import ru.sayap.vinylka.persistence.model.CartItemsEntity;
 import ru.sayap.vinylka.persistence.model.UserEntity;
 
 import java.util.UUID;

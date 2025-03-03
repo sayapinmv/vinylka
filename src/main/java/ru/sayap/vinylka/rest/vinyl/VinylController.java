@@ -1,15 +1,10 @@
-package ru.sayap.vinylka.rest.vinyl.controller;
+package ru.sayap.vinylka.rest.vinyl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.sayap.vinylka.persistence.model.VinylEntity;
-import ru.sayap.vinylka.persistence.repository.VinylRepository;
-import ru.sayap.vinylka.persistence.service.VinylService;
+import ru.sayap.vinylka.service.vinyl.VinylService;
 
 import java.util.List;
 

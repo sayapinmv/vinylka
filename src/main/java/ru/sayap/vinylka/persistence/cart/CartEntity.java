@@ -1,10 +1,12 @@
-package ru.sayap.vinylka.persistence.model;
+package ru.sayap.vinylka.persistence.cart;
 
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sayap.vinylka.persistence.model.CartItemsEntity;
+import ru.sayap.vinylka.persistence.model.UserEntity;
 
 import java.util.Set;
 import java.util.UUID;

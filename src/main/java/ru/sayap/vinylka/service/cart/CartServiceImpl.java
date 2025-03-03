@@ -1,31 +1,29 @@
-package ru.sayap.vinylka.persistence.service;
+package ru.sayap.vinylka.service.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sayap.vinylka.persistence.model.CartEntity;
+import ru.sayap.vinylka.persistence.cart.CartEntity;
 import ru.sayap.vinylka.persistence.model.CartItemsEntity;
 import ru.sayap.vinylka.persistence.model.UserEntity;
 import ru.sayap.vinylka.persistence.model.VinylEntity;
 import ru.sayap.vinylka.persistence.repository.CartItemsRepository;
-import ru.sayap.vinylka.persistence.repository.CartRepository;
+import ru.sayap.vinylka.persistence.cart.CartRepository;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
-public class CartService {
+public class CartServiceImpl implements CartService {
 
     CartRepository cartRepository;
     CartItemsRepository cartItemsRepository;
 
     @Autowired
-    public CartService(CartRepository cartRepository, CartItemsRepository cartItemsRepository) {
+    public CartServiceImpl(CartRepository cartRepository, CartItemsRepository cartItemsRepository) {
         this.cartRepository = cartRepository;
         this.cartItemsRepository = cartItemsRepository;
     }
 
+    @Override
     public CartEntity getCart(UserEntity userEntity) {
          return cartRepository.getByUserId(userEntity);
     }
@@ -55,6 +53,7 @@ public class CartService {
 //        cartItemsRepository.save(cartItemsEntity);
 //    }
 
+    @Override
     public void removeItemFromCart(UserEntity user, VinylEntity vinyl) {
         CartEntity cart = getCart(user);
         if (cart != null) {
@@ -65,6 +64,7 @@ public class CartService {
         }
     }
 
+    @Override
     public Set<CartItemsEntity> viewCartItems(UserEntity userEntity) {
         CartEntity cartEntity = getCart(userEntity);
         return (cartEntity != null) ? cartEntity.getItems() : null;

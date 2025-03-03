@@ -1,4 +1,4 @@
-package ru.sayap.vinylka.persistence.service;
+package ru.sayap.vinylka.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
