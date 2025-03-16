@@ -1,24 +1,26 @@
-package ru.sayap.vinylka.persistence.model;
+package ru.sayap.vinylka.persistence.order;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import ru.sayap.vinylka.persistence.orderedvinyl.OrderedVinylEntity;
+import ru.sayap.vinylka.persistence.user.UserEntity;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class OrderEntity {
 
     @Id
     @GeneratedValue
-    UUID id;
+    @Setter(AccessLevel.PROTECTED)
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -35,6 +37,7 @@ public class OrderEntity {
     LocalDate orderDate;
 
     @OneToMany(mappedBy = "orderId")
+    @ToString.Exclude
     List<OrderedVinylEntity> orderedVinylEntity;
 
     public enum  OrderStatus {

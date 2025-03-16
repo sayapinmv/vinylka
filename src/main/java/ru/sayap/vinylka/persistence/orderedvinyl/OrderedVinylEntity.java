@@ -1,26 +1,27 @@
-package ru.sayap.vinylka.persistence.model;
+package ru.sayap.vinylka.persistence.orderedvinyl;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import ru.sayap.vinylka.persistence.order.OrderEntity;
+import ru.sayap.vinylka.persistence.user.UserEntity;
+import ru.sayap.vinylka.persistence.vinyl.VinylEntity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name="orderd_vinyl")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class OrderedVinylEntity {
 
     @Id
     @GeneratedValue
-    UUID id;
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)

@@ -7,8 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.sayap.vinylka.persistence.cart.CartEntity;
 import ru.sayap.vinylka.persistence.cart.CartRepository;
-import ru.sayap.vinylka.persistence.model.*;
-import ru.sayap.vinylka.persistence.repository.*;
+import ru.sayap.vinylka.persistence.cartitems.CartItemsEntity;
+import ru.sayap.vinylka.persistence.cartitems.CartItemsRepository;
+import ru.sayap.vinylka.persistence.user.UserEntity;
+import ru.sayap.vinylka.persistence.user.UserRepository;
+import ru.sayap.vinylka.persistence.vinyl.VinylEntity;
+import ru.sayap.vinylka.persistence.vinyl.VinylRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,11 +28,11 @@ public class VinylConfig {
     @Autowired
     VinylRepository vinylRepository;
 
-    @Autowired
-    OrderRepository orderRepository;
+//    @Autowired
+//    OrderRepository orderRepository;
 
-    @Autowired
-    CartItemsRepository cartItemsRepository;
+//    @Autowired
+//    CartItemsRepository cartItemsRepository;
 
     @Autowired
     CartRepository cartRepository;
@@ -40,22 +44,20 @@ public class VinylConfig {
                     new UserEntity(
                             null,  // Or generate the UUID if needed
                             "The Greatest MaTBoT",
-                            List.of("Admin", "Authorized"),
+                            UserEntity.UserRole.USER,
                             "+7-921-333-12-13",
                             "sayapRules@dirty.ru",
                             "aaaaa",
-                            null,//Sex.MAN,  // userSex - add appropriate Sex enum value
-                            null,//UserStatus.ONLINE,  // status - set a default status
-                            null,
+                            UserEntity.UserSex.MAN,//Sex.MAN,  // userSex - add appropriate Sex enum value
+                            UserEntity.UserStatus.ONLINE,//UserStatus.ONLINE,  // status - set a default status
                             null,
                             null
                     )
             );
 
-            userRepository.saveAll(userList);  // Ensure the user is saved to the repository
 
             var vinylList = List.of(
-                    new VinylEntity (
+                    new VinylEntity(
                             null,
                             "The Beatles",
                             "Please Please Me",
@@ -64,22 +66,25 @@ public class VinylConfig {
                             LocalDate.of(1963, 12, 30),
                             "MaTBoT",
                             "RU",
+                            12,
                             "First Beatles Album",
-                            null,
                             null
                     )
             );
 
-            var orderList = List.of(
-                new OrderEntity(
-                    null,
-                    userList.get(0),
-                    null,
-                    null,
-                    LocalDate.of(1963, 12, 30),
-                    new ArrayList<>()
-                )
-            );
+//            var orderList = List.of(
+//                new OrderEntity(
+//                    null,
+//                    userList.get(0),
+//                    null,
+//                    null,
+//                    LocalDate.of(1963, 12, 30),
+//                    new ArrayList<>()
+//                )
+//            );
+
+            userList.forEach(userRepository::save);
+            vinylList.forEach(vinylRepository::save);
 
             var cartList = List.of(
                 new CartEntity(
@@ -89,20 +94,28 @@ public class VinylConfig {
                 )
             );
 
-            var cartItemsList = List.of(
-                    new CartItemsEntity(
-                        null,
-                        cartList.get(0),
-                        vinylList.get(0),
-                        12
-                    )
-            );
+//            var cartItemsList = List.of(
+//                    new CartItemsEntity(
+//                        null,
+//                        cartList.get(0),
+//                        vinylList.get(0),
+//                        12
+//                    )
+//            );
+//
+//            cartItemsRepository.saveAll(cartItemsList);
+
+//            cartList.get(0).setItems(cartItemsList);
+
+            cartList.forEach(cartRepository::save);
+
+
+            userList.get(0).setCartEntity(cartList.get(0));
+            userRepository.saveAll(userList);
+            cartRepository.saveAll(cartList);
 
             vinylRepository.saveAll(vinylList);
-            orderRepository.saveAll(orderList);
-            cartRepository.saveAll(cartList);
-            cartItemsRepository.saveAll(cartItemsList);
-
+//            orderRepository.saveAll(orderList);
 
 
 //            var orderedVinylList = List.of(

@@ -1,24 +1,23 @@
-package ru.sayap.vinylka.persistence.model;
+package ru.sayap.vinylka.persistence.cartitems;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.sayap.vinylka.persistence.cart.CartEntity;
-
-import java.util.UUID;
+import ru.sayap.vinylka.persistence.vinyl.VinylEntity;
 
 @Entity
 @Table(name = "cart_items")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
+@ToString
 public class CartItemsEntity {
 
-
     @Id
-    @GeneratedValue
-    UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.PROTECTED)
+    Long id;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
@@ -29,7 +28,6 @@ public class CartItemsEntity {
     VinylEntity vinylId;
 
     @Column(name = "quantity")
-    int qnty;
-
+    Integer qnty;
 
 }

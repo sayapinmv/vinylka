@@ -1,35 +1,33 @@
 package ru.sayap.vinylka.rest.order;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sayap.vinylka.persistence.model.OrderEntity;
-import ru.sayap.vinylka.persistence.model.UserEntity;
-import ru.sayap.vinylka.service.OrderService;
-import ru.sayap.vinylka.service.UserService;
+import ru.sayap.vinylka.persistence.order.OrderRepository;
+import ru.sayap.vinylka.service.order.OrderService;
+import ru.sayap.vinylka.service.order.vo.OrderVo;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 
     private OrderService orderService;
-    private UserService userService;
 
-    public OrderController(OrderService orderService, UserService userService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.userService = userService;
     }
 
-    @GetMapping("/{user_id}")
-    public List<OrderEntity> getOrders(@PathVariable(name = "user_id") UUID userId) {
+    @GetMapping
+    public List<OrderVo> getOrders(@RequestParam UUID userId) {
 
-        UserEntity userEntity = userService.findById(userId);
+       List<OrderVo> order = orderService.getOrders(userId);
 
-        return orderService.getUserOrders(userEntity);
+       return order;
+
     }
 
 }

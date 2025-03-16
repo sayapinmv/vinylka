@@ -1,10 +1,9 @@
-package ru.sayap.vinylka.persistence.model;
+package ru.sayap.vinylka.persistence.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.sayap.vinylka.persistence.cart.CartEntity;
+import ru.sayap.vinylka.persistence.order.OrderEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,52 +16,63 @@ import java.util.UUID;
 @Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
 public class UserEntity {
 
 //    private static final String PHONE_REGEX = "^(?:\\+7|8)?\\s*\\(?\\d{3}\\)?\\s*\\d{3}[-\\s]?\\d{2}[-\\s]?\\d{2}$";
 //    private static final Pattern phonePattern = Pattern.compile(PHONE_REGEX);
 
     @Id
-    @GeneratedValue
-    UUID id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Setter(AccessLevel.PROTECTED)
+    private UUID id;
 
     @Column(name = "full_name")
-    String fullName;
+    private String fullName;
 
-    @ElementCollection
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    //@ElementCollection
+    //@CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private List<String> roles;
+    private UserRole roles;
 
     @Column(name = "phone_number")
-    String phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "email", unique = true)
-    String email;
+    private String email;
 
     @Column(name = "password")
-    String password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_sex")
-    Sex userSex;
+    private UserSex userSex;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    UserStatus status;
+    private UserStatus status;
 
     @OneToMany(mappedBy = "userId")
+    @ToString.Exclude
     List<OrderEntity> orderEntity;
+//
+    @OneToOne(mappedBy = "userId")
+    @ToString.Exclude
+    CartEntity cartEntity;
+//
+//    @OneToMany(mappedBy = "userId")
+//    @ToString.Exclude
+//    List<OrderedVinylEntity> orderedVinylEntity;
 
-    @OneToMany(mappedBy = "userId")
-    List<CartEntity> cartEntity;
-
-    @OneToMany(mappedBy = "userId")
-    List<OrderedVinylEntity> orderedVinylEntity;
-
-    public enum Sex {
+    public enum UserSex {
         MAN, WOMAN
+    }
+
+    public enum UserRole {
+        ADMIN, UNAUTHORIZED, USER
     }
 
     public enum UserStatus {

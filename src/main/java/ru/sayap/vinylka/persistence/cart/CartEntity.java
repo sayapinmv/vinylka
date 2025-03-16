@@ -2,12 +2,11 @@ package ru.sayap.vinylka.persistence.cart;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.sayap.vinylka.persistence.model.CartItemsEntity;
-import ru.sayap.vinylka.persistence.model.UserEntity;
+import lombok.*;
+import ru.sayap.vinylka.persistence.cartitems.CartItemsEntity;
+import ru.sayap.vinylka.persistence.user.UserEntity;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,18 +14,25 @@ import java.util.UUID;
 @Table(name = "cart")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
+
+// Является ли этот подход хорошим тоном или обязательным критерием @JdbcTypeCode(SqlTypes.VARCHAR)
+
 public class CartEntity {
 
     @Id
-    @GeneratedValue
-    UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @Setter(AccessLevel.PROTECTED)
+    private Long id;
 
-    @ManyToOne()
+    @OneToOne()
     @JoinColumn(name = "user_id", nullable = false)
-    UserEntity userId;
+    private UserEntity userId;
 
-    @OneToMany(mappedBy = "cartId")
-    private Set<CartItemsEntity> items;
+    @OneToMany(mappedBy = "cartId", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<CartItemsEntity> items;
 
 }

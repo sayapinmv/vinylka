@@ -1,9 +1,10 @@
-package ru.sayap.vinylka.persistence.repository;
+package ru.sayap.vinylka.persistence.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.sayap.vinylka.persistence.model.UserEntity;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
+
 }
