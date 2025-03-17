@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface OrderService {
 
-    List<OrderVo> getOrders(UUID userId);
+    List<OrderVo> getOrders(UUID userId, Integer page, Integer size);
 
     OrderVo getOrder(UUID userId, Long orderId);
 

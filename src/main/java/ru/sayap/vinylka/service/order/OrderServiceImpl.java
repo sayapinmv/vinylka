@@ -2,6 +2,7 @@ package ru.sayap.vinylka.service.order;
 
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.sayap.vinylka.persistence.order.OrderEntity;
 import ru.sayap.vinylka.persistence.orderedvinyl.OrderedVinylEntity;
@@ -38,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderVo> getOrders(UUID userId) {
+    public List<OrderVo> getOrders(UUID userId, Integer page, Integer size) {
 
         UserEntity userEntity = userRepository
                 .findById(userId)
@@ -47,8 +48,7 @@ public class OrderServiceImpl implements OrderService {
         System.out.println(userEntity.getUserSex());
 
         List<OrderEntity> orderList = orderRepository
-                .findAllByUserId(userEntity)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .findAllByUserId(userEntity, Pageable.ofSize(size).withPage(page)).getContent();
 
         System.out.println(orderList.size());
 

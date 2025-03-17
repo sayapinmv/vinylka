@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface CartService {
 
-    List<CartItemsVo> getCartItemsByCartId(UUID userId);
+    List<CartItemsVo> getCartItemsByCartId(UUID userId, Integer page, Integer size);
     CartItemsVo addCartItem(AddItemRequest addItemRequest, UUID userId);
     void removeCartItem(Long vinylId, UUID userId);
 

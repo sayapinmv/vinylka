@@ -46,11 +46,13 @@ public class CartController {
 
     // передача id по ссылке временное решение, разумеется
 
-    @GetMapping()
-    public ResponseEntity<List<GetCartRequest>> getCartItems(@RequestParam("id") Optional<UUID> userId) {
+    @GetMapping
+    public ResponseEntity<List<GetCartRequest>> getCartItems(@RequestParam("id") Optional<UUID> userId,
+                                                             @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                             @RequestParam(name = "size", defaultValue = "50") Integer size) {
 
         if (userId.isPresent()) {
-            List<CartItemsVo> cartItemsVo = cartService.getCartItemsByCartId(userId.get());
+            List<CartItemsVo> cartItemsVo = cartService.getCartItemsByCartId(userId.get(), page, size);
 
             return ResponseEntity.ok().body(cartControllerMapper.toGetCartRequest(cartItemsVo));
         }

@@ -50,6 +50,8 @@ dependencies {
     implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.6.3'
 // https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor
     annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.6.3'
+    // https://mvnrepository.com/artifact/org.keycloak/keycloak-core
+    implementation("org.keycloak:keycloak-core:26.1.4")
 
 }
 

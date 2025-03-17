@@ -1,11 +1,12 @@
 package ru.sayap.vinylka.service.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.sayap.vinylka.persistence.cart.CartEntity;
 import ru.sayap.vinylka.persistence.cart.CartRepository;
 import ru.sayap.vinylka.persistence.cartitems.CartItemsEntity;
+import ru.sayap.vinylka.persistence.cartitems.CartItemsRepository;
 import ru.sayap.vinylka.persistence.user.UserEntity;
 import ru.sayap.vinylka.persistence.user.UserRepository;
 import ru.sayap.vinylka.persistence.vinyl.VinylEntity;
@@ -15,7 +16,6 @@ import ru.sayap.vinylka.service.cart.mapper.CartServiceMapper;
 import ru.sayap.vinylka.service.cart.vo.CartItemsVo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,17 +32,19 @@ public class CartServiceImpl implements CartService {
     private CartServiceMapper cartServiceMapper;
     private VinylRepository vinylRepository;
     private UserRepository userRepository;
+    private CartItemsRepository cartItemsRepository;
 
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository, CartServiceMapper cartServiceMapper, VinylRepository vinylRepository, UserRepository userRepository) {
+    public CartServiceImpl(CartRepository cartRepository, CartServiceMapper cartServiceMapper, VinylRepository vinylRepository, UserRepository userRepository, CartItemsRepository cartItemsRepository) {
         this.cartRepository = cartRepository;
         this.cartServiceMapper = cartServiceMapper;
         this.vinylRepository = vinylRepository;
         this.userRepository = userRepository;
+        this.cartItemsRepository = cartItemsRepository;
     }
 
     @Override
-    public List<CartItemsVo> getCartItemsByCartId(UUID userId) {
+    public List<CartItemsVo> getCartItemsByCartId(UUID userId, Integer page, Integer size) {
 
         //    List<CartItemsEntity> cartItemsEntities = cartRepository.findByCartId(cartId);
         //        return cartItemsEntities.stream()
@@ -54,11 +56,11 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
         CartEntity cartEntity = cartRepository
-                .findCartByUserId(userEntity)
+                .findByUserId(userEntity)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
-        return cartServiceMapper.toCartItemsVoList(cartEntity.getItems());
-
+        return cartServiceMapper.toCartItemsVoList(
+                cartItemsRepository.findByCartId(cartEntity, Pageable.ofSize(size).withPage(page)).getContent());
     }
 
     @Override
@@ -73,7 +75,7 @@ public class CartServiceImpl implements CartService {
                 .findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
-        CartEntity cartEntity = cartRepository.findCartByUserId(userEntity).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
+        CartEntity cartEntity = cartRepository.findByUserId(userEntity).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
         VinylEntity vinylEntity = vinylRepository.findById(addItemRequest.vinylId()).orElseThrow(() -> new IllegalArgumentException("Invalid vinyl id"));
 
@@ -108,7 +110,7 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
         CartEntity cartEntity = cartRepository
-                .findCartByUserId(userEntity)
+                .findByUserId(userEntity)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
 

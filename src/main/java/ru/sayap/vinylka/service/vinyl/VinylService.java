@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface VinylService {
 
-    public List<VinylVo> getVinylList();
+    public List<VinylVo> getVinylList(int size, int page);
 
     public VinylVo getVinyl(Long id);
 

@@ -32,30 +32,16 @@ public class VinylController {
     }
 
 
+    // Мне кажется Integer можно заменить на простой int
     @GetMapping
-    public ResponseEntity<List<GetVinylDto>> getAllVinyl(@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+    public ResponseEntity<List<GetVinylDto>> getAllVinyl(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                         @RequestParam(value = "size", defaultValue = "50") Integer size) {
 
-        if (page.isPresent() && size.isPresent()) {
-            List<VinylVo> getVinylVo = vinylService.getVinylList();
+        List<VinylVo> getVinylVo = vinylService.getVinylList(size, page);
 
-            //vinylVo.get(0).setAlbum("MatBoT the best man in the World");
+        return ResponseEntity.ok(vinylControllerMapper.toGetVinylDto(getVinylVo));
 
-//                List<GetVinylDto> vinylDto = getVinylVo.stream()
-//                        .map(vinylControllerMapper::toVinylDto)
-//                        .toList();
-
-            List<GetVinylDto> getVinylDto = new ArrayList<>();
-
-            for (int i = 0; i < getVinylVo.size(); i++) {
-
-                getVinylDto.add(vinylControllerMapper.toGetVinylDto(getVinylVo.get(i)));
-
-            }
-
-            return ResponseEntity.ok(getVinylDto);
-        }
-
-        throw new IllegalArgumentException("Required parameter (page or size) not provided, unfortunately");
+        //throw new IllegalArgumentException("Required parameter (page or size) not provided, unfortunately");
 
     }
 
@@ -75,7 +61,6 @@ public class VinylController {
 
         return ResponseEntity.created(URI.create("/%s".formatted(vinylVo.getId())))
                 .body(vinylControllerMapper.toGetVinylDto(vinylVo));
-
 
     }
 
@@ -98,55 +83,3 @@ public class VinylController {
     }
 
 }
-
-
-
-
-
-//    @GetMapping
-//    public ResponseEntity<?> getAll() {
-//        List<VinylEntity> vinyls = vinylRepository.findAll();
-//        return !vinyls.isEmpty() ? new ResponseEntity<>(vinyls, HttpStatus.OK): new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-
-//    @GetMapping()
-//    public String vinyl(Model model) {
-//        model.addAttribute("vinyl", vinylDAO.getVinyl());
-//        return "vinyl/index";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public String singleVinyl(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("album", vinylDAO.getVinylById(id));
-//        return "vinyl/item";
-//    }
-//
-//    @GetMapping("/add")
-//    public String newVinyl(Model model) {
-//        model.addAttribute("vinyl", new Vinyl());
-//        return "vinyl/add";
-//    }
-//
-//    @PostMapping()
-//    public String add(@ModelAttribute("vinyl") Vinyl vinyl) {
-//        vinylDAO.saveVinyl(vinyl);
-//        return "redirect:/vinyl";
-//    }
-//
-//    @GetMapping("/{id}/edit")
-//    public String editVinyl(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("vinyl", vinylDAO.getVinylById(id));
-//        return "vinyl/edit";
-//    }
-//
-//    @PatchMapping("/{id}")
-//    public String updateVinyl(@ModelAttribute("vinyl") Vinyl vinyl, @PathVariable("id") int id) {
-//        vinylDAO.update(id, vinyl);
-//        return "redirect:/vinyl";
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public String deleteVinyl(@PathVariable("id") int id) {
-//        vinylDAO.delete(id);
-//        return "redirect:/vinyl";
-//    }

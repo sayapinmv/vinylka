@@ -3,6 +3,7 @@ package ru.sayap.vinylka.service.vinyl;
 import jakarta.transaction.Transactional;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.sayap.vinylka.persistence.vinyl.VinylEntity;
 import ru.sayap.vinylka.persistence.vinyl.VinylRepository;
@@ -40,11 +41,12 @@ public class VinylServiceImpl implements VinylService {
 
     }
 
-
     @Override
-    public List<VinylVo> getVinylList() {
-        return vinylRepository.findAll()
-                .stream()
+    public List<VinylVo> getVinylList(int size, int page ) {
+
+        var vinyl = vinylRepository.findAll(Pageable.ofSize(size).withPage(page));
+
+        return vinyl.stream()
                 .map(vinylServiceMapper::toVinylVo)
                 .toList();
     }

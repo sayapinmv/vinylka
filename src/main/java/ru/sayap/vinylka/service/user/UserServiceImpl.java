@@ -1,6 +1,7 @@
 package ru.sayap.vinylka.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.sayap.vinylka.persistence.user.UserEntity;
 import ru.sayap.vinylka.persistence.user.UserRepository;
@@ -17,25 +18,19 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService{
 
-    private final VinylServiceMapper vinylServiceMapper;
     UserRepository userRepository;
     UserServiceMapper userServiceMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserServiceMapper userServiceMapper, VinylServiceMapper vinylServiceMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserServiceMapper userServiceMapper) {
         this.userRepository = userRepository;
         this.userServiceMapper = userServiceMapper;
-        this.vinylServiceMapper = vinylServiceMapper;
     }
 
     @Override
-    public List<UserVo> findAll() {
+    public List<UserVo> findAll(Integer page, Integer size) {
 
-        List<UserEntity> userEntity = new ArrayList<>();
-
-        userEntity = userRepository.findAll();
-
-        return userServiceMapper.toUsersVo(userEntity);
+        return userServiceMapper.toUsersVo(userRepository.findAll(Pageable.ofSize(size).withPage(page)).getContent());
 
     }
 

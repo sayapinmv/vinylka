@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface UserService {
 
-    public List<UserVo> findAll();
+    public List<UserVo> findAll(Integer page, Integer size);
 
     public UserVo findById(UUID id);
 

@@ -27,10 +27,10 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<GetOrder> getAllOrders(@RequestParam("id")  Optional<UUID> userId) {
+    public List<GetOrder> getAllOrders(@RequestParam("id")  Optional<UUID> userId, @RequestParam(name = "page", defaultValue = "0") Integer page, @RequestParam(name = "size", defaultValue = "50") Integer size)  {
 
        if (userId.isPresent()) {
-           List<OrderVo> order = orderService.getOrders(userId.get());
+           List<OrderVo> order = orderService.getOrders(userId.get(), page, size);
 
            return orderControllerMapper.toGetOrder(order);
        }
