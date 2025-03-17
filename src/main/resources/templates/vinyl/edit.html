@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Vinyl Info</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/vinyl/{id}(id=${vinyl.getId()})}" th:object="${vinyl}">
+    <label for="album">Enter Album ID</label>
+    <input type="text" th:field="*{album}" id="album"/>
+    <br>
+    <input type="submit" value="Update Vinyl Info"/>
+</form>
+
+</body>
+</html>

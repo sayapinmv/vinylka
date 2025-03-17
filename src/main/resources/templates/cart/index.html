@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cart</title>
+</head>
+<body>
+<h1>Cart</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Album Name</th>
+        <th>ID</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vinyl : ${cart}">
+        <td th:text="${vinyl.album}"></td>
+        <td th:text="${vinyl.id}"></td>
+        <td>
+            <form th:action="@{/cart/{id}(id=${vinyl.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<form th:action="@{/cart/clear}" method="post">
+    <button type="submit">Clear Cart</button>
+</form>
+
+<a href="/vinyl">Go To Stock</a>
+</body>
+</html>

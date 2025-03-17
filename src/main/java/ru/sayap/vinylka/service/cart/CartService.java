@@ -1,16 +1,15 @@
 package ru.sayap.vinylka.service.cart;
 
-import ru.sayap.vinylka.persistence.cart.CartEntity;
-import ru.sayap.vinylka.persistence.model.CartItemsEntity;
-import ru.sayap.vinylka.persistence.model.UserEntity;
-import ru.sayap.vinylka.persistence.model.VinylEntity;
-
-import java.util.Set;
+import ru.sayap.vinylka.persistence.cartitems.CartItemsEntity;
+import ru.sayap.vinylka.rest.cart.dto.AddItemRequest;
+import ru.sayap.vinylka.service.cart.vo.CartItemsVo;
+import java.util.List;
+import java.util.UUID;
 
 public interface CartService {
-    CartEntity getCart(UserEntity userEntity);
 
-    void removeItemFromCart(UserEntity user, VinylEntity vinyl);
+    List<CartItemsVo> getCartItemsByCartId(UUID userId);
+    CartItemsVo addCartItem(AddItemRequest addItemRequest, UUID userId);
+    void removeCartItem(Long vinylId, UUID userId);
 
-    Set<CartItemsEntity> viewCartItems(UserEntity userEntity);
 }

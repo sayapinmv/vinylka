@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vinyl</title>
+</head>
+<body>
+<h1>Vinyl Stock</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Album</th>
+        <th>ID</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vinyl : ${vinyl}">
+        <td th:id="${vinyl}" th:text="${vinyl.album}">
+            <a th:href="@{/vinyl/{id}(id=${vinyl.getId()})}" th:text="${vinyl.getAlbum()}"/>
+        </td>
+        <td th:text="${vinyl.id}"></td>
+        <td>
+            <form th:action="@{/cart/add/{id}(id=${vinyl.id})}" method="post">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+
+<a href="/cart">Go To Cart</a>
+</body>
+</html>
+
+<!--<!doctype html>-->
+<!--<html lang="en" xmlns:th="http://thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport"-->
+<!--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--    <title>Vinyl Stock</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div th:each="album : ${vinyl}">-->
+<!--    <a th:href="@{/vinyl/{id}(id=${album.getId()})}" th:text="${album.getAlbum()}" >Album</a>-->
+<!--</div>-->
+
+<!--<br/>-->
+<!--<hr/>-->
+
+<!--<a href="/vinyl/add">Add new Vinyl</a>-->
+
+<!--</body>-->
+<!--</html>-->

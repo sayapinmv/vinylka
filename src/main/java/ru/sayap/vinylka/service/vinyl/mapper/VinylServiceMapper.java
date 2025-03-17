@@ -1,14 +1,15 @@
 package ru.sayap.vinylka.service.vinyl.mapper;
 
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
-import ru.sayap.vinylka.persistence.model.VinylEntity;
-import ru.sayap.vinylka.service.vinyl.model.VinylModel;
+import ru.sayap.vinylka.persistence.vinyl.VinylEntity;
+import ru.sayap.vinylka.rest.vinyl.dto.CreateVinylRequest;
+import ru.sayap.vinylka.rest.vinyl.dto.UpdateVinylRequest;
+import ru.sayap.vinylka.service.vinyl.vo.VinylVo;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface VinylServiceMapper {
-    VinylEntity toEntity(VinylModel vinylEntityDto);
 
-    VinylModel toVinylEntityDto(VinylEntity vinylEntity);
+    VinylVo toVinylVo(VinylEntity vinylEntity);
+
 }
