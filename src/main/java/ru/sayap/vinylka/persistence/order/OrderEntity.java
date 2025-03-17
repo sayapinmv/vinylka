@@ -52,4 +52,20 @@ public class OrderEntity {
         PICKUP,
         SERVICE
     }
+
+    public enum PickPoints{
+
+        MYTISHI("Sylikatnaya Street");
+
+        private String pickPoint;
+
+        PickPoints(String pickPoint){
+            this.pickPoint = pickPoint;
+        }
+
+        public String getPickPoint(){
+            return pickPoint;
+        }
+
+    }
 }

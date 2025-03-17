@@ -98,6 +98,8 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    // Я не понимаю почему не удаляется товар из карты
+
     @Override
     public void removeCartItem(Long vinylId, UUID userId) {
 
@@ -110,7 +112,14 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
 
-        cartEntity.getItems().removeIf(CartItemsEntity -> CartItemsEntity.getVinylId().getId().equals(vinylId));
+        boolean isRemoved = cartEntity.getItems().removeIf(cartItem -> cartItem.getVinylId().getId().equals(vinylId));
+
+
+        if (!isRemoved) {
+
+            throw new IllegalArgumentException("Item not found");
+
+        }
 
         cartRepository.save(cartEntity);
 

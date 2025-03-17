@@ -3,11 +3,13 @@ package ru.sayap.vinylka.persistence.vinyl;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.sayap.vinylka.persistence.cartitems.CartItemsEntity;
+import ru.sayap.vinylka.persistence.orderedvinyl.OrderedVinylEntity;
 //import ru.sayap.vinylka.persistence.cartitems.CartItemsEntity;
 //import ru.sayap.vinylka.persistence.orderedvinyl.OrderedVinylEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -54,9 +56,9 @@ public class VinylEntity {
     @OneToMany(mappedBy = "vinylId")
     @ToString.Exclude
     List<CartItemsEntity> cartItemsEntity;
-//
-//    @OneToMany(mappedBy = "vinylId")
-//    @ToString.Exclude
-//    List<OrderedVinylEntity> orderedVinylEntity;
+
+    @ManyToMany(mappedBy = "vinylId")
+    @ToString.Exclude
+    List<OrderedVinylEntity> orderedVinylEntity = new ArrayList<>();
 
 }

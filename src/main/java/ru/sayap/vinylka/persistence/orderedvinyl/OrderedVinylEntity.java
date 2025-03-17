@@ -9,6 +9,8 @@ import ru.sayap.vinylka.persistence.vinyl.VinylEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="orderd_vinyl")
@@ -21,7 +23,7 @@ public class OrderedVinylEntity {
 
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
@@ -31,9 +33,9 @@ public class OrderedVinylEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userId;
 
-    @ManyToOne
-    @JoinColumn(name = "vinyl_id", nullable = false)
-    private VinylEntity vinylId;
+    @ManyToMany
+    @JoinTable(name = "vinyl_id")
+    private List<VinylEntity> vinylId = new ArrayList<>();
 
     @Column(name = "album_name")
     private String albumName;

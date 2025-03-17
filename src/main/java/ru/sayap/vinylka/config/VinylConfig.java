@@ -68,6 +68,7 @@ public class VinylConfig {
                             "RU",
                             12,
                             "First Beatles Album",
+                            null,
                             null
                     )
             );
@@ -110,7 +111,7 @@ public class VinylConfig {
             cartList.forEach(cartRepository::save);
 
 
-            userList.get(0).setCartEntity(cartList.get(0));
+            //userList.get(0).setCartEntity(cartList.get(0));
             userRepository.saveAll(userList);
             cartRepository.saveAll(cartList);
 

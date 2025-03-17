@@ -6,6 +6,7 @@ import ru.sayap.vinylka.persistence.order.OrderEntity;
 import ru.sayap.vinylka.persistence.orderedvinyl.OrderedVinylEntity;
 import ru.sayap.vinylka.persistence.user.UserEntity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,24 +15,20 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderVo {
-    @Id
-    Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    private Long id;
+
     private UserEntity userId;
 
-    @Column(name = "status")
-    OrderEntity.OrderStatus status;
+    private OrderEntity.OrderStatus status;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "delivery_type")
-    OrderEntity.Delivery deliveryType;
+    private OrderEntity.Delivery deliveryType;
 
-    @Column(name = "order_date")
-    LocalDate orderDate;
+    private LocalDate orderDate;
 
-    @OneToMany(mappedBy = "orderId")
-    @ToString.Exclude
-    List<OrderedVinylEntity> orderedVinylEntity;
+    private Boolean isPaid;
+
+    private BigDecimal totalPrice;
+
+    private List<OrderedVinylEntity> orderedVinylEntity;
 }
